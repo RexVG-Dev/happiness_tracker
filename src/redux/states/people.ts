@@ -1,6 +1,7 @@
+import { createSlice } from "@reduxjs/toolkit";
+
 import { LocalStorageTypes, Person } from "@/models";
 import { getLocalStorage, setLocalStorage } from "@/utilities";
-import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: Person[] = [];
 

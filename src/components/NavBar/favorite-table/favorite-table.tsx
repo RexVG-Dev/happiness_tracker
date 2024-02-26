@@ -1,33 +1,25 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { FavoriteRounded, FavoriteBorderRounded } from '@mui/icons-material';
+import { DeleteRounded } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
+import { GridRenderCellParams, DataGrid } from '@mui/x-data-grid';
 
-import { Person } from '@/models';
-import { addFavorites } from '@/redux/states';
+import { removeFavorite } from '@/redux/states';
 import { AppStore } from '@/redux/store';
+import { Person } from '@/models';
 
-export type PeopleTableProps = {
+export type FavoriteTableProps = {
 	// types...
-};
+}
 
-const PeopleTable: React.FC<PeopleTableProps>  = () => {
-  const pageSize = 5;
+const FavoriteTable: React.FC<FavoriteTableProps>  = () => {
+	const pageSize = 5;
 	const dispatch = useDispatch();
-	const statePeople = useSelector((store: AppStore) => store.people);
   const favoritePeople = useSelector((store: AppStore) => store.favorites);
 
-	const findPerson = (person: Person) => !!favoritePeople.find(p => p.id === person.id);
-	const filterPerson = (person: Person) => favoritePeople.filter(p => p.id !== person.id);
-
-	const handleChange = (person: Person) => {
-		const filteredPeople = findPerson(person)
-		? filterPerson(person)
-		: [...favoritePeople, person];
-
-		dispatch(addFavorites(filteredPeople));
+	const handleClick = (person: Person) => {
+		dispatch(removeFavorite(person));
 	};
 
 	const columns = [
@@ -39,12 +31,9 @@ const PeopleTable: React.FC<PeopleTableProps>  = () => {
 			width: 50,
 			renderCell: (params: GridRenderCellParams) => <>{
 				<IconButton
-					onClick={() => handleChange(params.row)}
+					onClick={() => handleClick(params.row)}
 				>
-					{ findPerson(params.row)
-						? <FavoriteRounded color="primary" />
-						: <FavoriteBorderRounded />
-					}
+					<DeleteRounded />
 				</IconButton>
 			}</>
 		},
@@ -80,7 +69,7 @@ const PeopleTable: React.FC<PeopleTableProps>  = () => {
   
   return (
     <DataGrid
-      rows={statePeople}
+      rows={favoritePeople}
       columns={columns}
       initialState={{
         pagination: { paginationModel: { pageSize: pageSize } },
@@ -92,6 +81,6 @@ const PeopleTable: React.FC<PeopleTableProps>  = () => {
       getRowId={(row: any ) => row.id}
     />
   )
-}
+};
 
-export default PeopleTable;
+export default FavoriteTable;

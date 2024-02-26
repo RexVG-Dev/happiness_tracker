@@ -1,5 +1,6 @@
-import { Person } from "@/models";
 import { configureStore } from "@reduxjs/toolkit";
+
+import { Person } from "@/models";
 import { favoritesSlice, peopleSlice } from "./states";
 
 export interface AppStore {

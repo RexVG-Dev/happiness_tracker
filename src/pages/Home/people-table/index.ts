@@ -1,1 +1,1 @@
-export * from './people-table';
+export { default as PeopleTable} from './people-table';

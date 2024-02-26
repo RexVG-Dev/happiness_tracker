@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { People } from '@/data/people';
 import { useDispatch } from 'react-redux';
+
+import { People } from '@/data/people';
 import { addPeople } from '@/redux/states';
-import PeopleTable from './people-table/people-table';
+import { PeopleTable } from './people-table';
 
 export type HomeProps = {
 	// types...

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
 import { People } from '@/data/people';
 import { Person } from '@/models';
-import { Checkbox } from '@mui/material';
-
+import { IconButton } from '@mui/material';
+// import { FavoriteRoundedIcon } from '@mui/icons-material';
+import { FavoriteRounded, FavoriteBorderRounded } from '@mui/icons-material';
 
 export type HomeProps = {
 	// types...
@@ -31,13 +32,15 @@ const Home: React.FC<HomeProps>  = () => {
 			headerName: '',
 			width: 50,
 			renderCell: (params: GridRenderCellParams) => <>{
-				<Checkbox
-					size="small"
-					checked={
-						findPerson(params.row)
+				<IconButton
+					onClick={() => handleChange(params.row)}
+				>
+					{ findPerson(params.row)
+						? <FavoriteRounded color="primary" />
+						: <FavoriteBorderRounded />
 					}
-					onChange={() => handleChange(params.row)}
-				/>
+					
+				</IconButton>
 			}</>
 		},
 		{
